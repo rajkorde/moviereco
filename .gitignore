@@ -1,0 +1,7 @@
+*.ipynb_checkpoints*
+*.pkl
+*.gz
+*.hd5
+*.pyc
+*.csv
+*.feather
