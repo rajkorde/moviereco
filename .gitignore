@@ -6,3 +6,5 @@
 *.csv
 *.feather
 *.h5
+*.iml
+*.xml
