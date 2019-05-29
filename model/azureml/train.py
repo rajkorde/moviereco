@@ -12,17 +12,23 @@ from sklearn.metrics import mean_squared_error
 from azureml.core import Run
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data-folder', type=str, dest='data_folder', help='data folder mounting point')
-parser.add_argument('--batch-size', type=int, dest='batch_size', default=50, help='mini batch size for training')
-parser.add_argument('--first-layer-neurons', type=int, dest='n_hidden_1', default=100,
+parser.add_argument('--data-folder', type=str, dest='data_folder', default='../data', help='data folder mounting point')
+parser.add_argument('--batch-size', type=int, dest='batch_size', default=512, help='mini batch size for training')
+parser.add_argument('--first-layer-neurons', type=int, dest='n_hidden_1', default=512,
                     help='# of neurons in the first layer')
-parser.add_argument('--second-layer-neurons', type=int, dest='n_hidden_2', default=100,
+parser.add_argument('--second-layer-neurons', type=int, dest='n_hidden_2', default=256,
                     help='# of neurons in the second layer')
-parser.add_argument('--learning-rate', type=float, dest='learning_rate', default=0.001, help='learning rate')
+parser.add_argument('--learning-rate', type=float, dest='learning_rate', default=0.01, help='learning rate')
 
 args = parser.parse_args()
 
 data_folder = args.data_folder
+batch_size = args.batch_size
+n_hidden_1 = args.n_hidden_1
+n_hidden_2 = args.n_hidden_2
+learning_rate = args.learning_rate
+
+
 print('training dataset is stored here:', data_folder)
 
 raw = pd.read_csv(data_folder + '/train.csv')
@@ -82,14 +88,14 @@ for cat_col in cat_cols:
     output_embeddings.append(output_model)
 
 x = concatenate(output_embeddings)
-x = Dense(512, activation='relu')(x)
+x = Dense(n_hidden_1, activation='relu')(x)
 x = Dropout(rate=0.7)(x)
-x = Dense(256, activation='relu')(x)
+x = Dense(n_hidden_2, activation='relu')(x)
 x = Dropout(rate=0.4)(x)
 x = Dense(1)(x)
 
 model = Model(inputs=input_models, outputs=x)
-opt = Adam(lr=0.01)
+opt = Adam(lr=learning_rate)
 model.compile(loss='mean_squared_error', optimizer=opt, metrics=['mse'])
 
 
@@ -109,7 +115,7 @@ class LogRunMetrics(Callback):
         run.log('Loss', log['loss'])
         run.log('Accuracy', log['acc'])
 
-model.fit(X_train_list, y_train, validation_data=(X_test_list, y_test), epochs=2 , batch_size=256)
+model.fit(X_train_list, y_train, validation_data=(X_test_list, y_test), epochs=2 , batch_size=batch_size)
 
 pred = model.predict(X_test_list)
 score = np.sqrt(mean_squared_error(y_test,pred))
