@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <title>Simple demo app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">
+      .container {
+        max-width: 960px;
+        padding-top: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+    <center><h1>Simple Model Demo App</h1></center>
+<!---
+    {% block content %}
+    <h3>Enter Model Input</h3>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>{{form.user_id.label}} {{form.user_id}}<br></p>
+        <p>{{form.product_id.label}} {{form.product_id}}<br></p>
+        <p>{{form.gender.label}} {{form.gender}}<br></p>
+        <p>{{form.age.label}} {{form.age}}<br></p>
+        <p>{{form.occupation.label}} {{form.occupation}}<br></p>
+        <p>{{form.city_category.label}} {{form.city_category}}<br></p>
+        <p>{{form.years_in_city.label}} {{form.years_in_city}}<br></p>
+        <p>{{form.marital_status.label}} {{form.marital_status}}<br></p>
+        <p>{{form.pc1.label}} {{form.pc1}}<br></p>
+        <p>{{form.pc2.label}} {{form.pc2}}<br></p>
+        <p>{{form.pc3.label}} {{form.pc3}}<br></p>
+
+        <p>{{ form.submit()}}</p>
+    </form>
+    {% endblock %}
+
+        <b>Prediction: {{prediction}}</b>
+        --->
+        <p></p>
+    {% block content1 %}
+    <h3>Enter Model Input</h3>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+        <table class="table">
+            <tr>
+                <td>{{form.user_id.label}}</td>
+                <td>{{form.user_id}}</td>
+            </tr>
+            <tr>
+                <td>{{form.product_id.label}}</td>
+                <td>{{form.product_id}}</td>
+            </tr>
+            <tr>
+                <td>{{form.gender.label}}</td>
+                <td>{{form.gender}}</td>
+            </tr>
+            <tr>
+                <td>{{form.age.label}}</td>
+                <td>{{form.age}}</td>
+            </tr>
+            <tr>
+                <td>{{form.occupation.label}}</td>
+                <td>{{form.occupation}}</td>
+            </tr>
+            <tr>
+                <td>{{form.city_category.label}}</td>
+                <td>{{form.city_category}}</td>
+            </tr>
+            <tr>
+                <td>{{form.years_in_city.label}}</td>
+                <td>{{form.years_in_city}}</td>
+            </tr>
+            <tr>
+                <td>{{form.marital_status.label}}</td>
+                <td>{{form.marital_status}}</td>
+            </tr>
+            <tr>
+                <td>{{form.pc1.label}}</td>
+                <td>{{form.pc1}}</td>
+            </tr>
+            <tr>
+                <td>{{form.pc2.label}}</td>
+                <td>{{form.pc2}}</td>
+            </tr>
+            <tr>
+                <td>{{form.pc3.label}}</td>
+                <td>{{form.pc3}}</td>
+            </tr>
+            <tr>
+                <td>{{form.submit()}}</td>
+            </tr>
+
+
+        </table>
+        </form>
+    {% endblock %}
+
+        <p><b>Prediction: <span class="text-success">{{prediction}}</span></b></p>
+
+
+    </div>
+  </body>
