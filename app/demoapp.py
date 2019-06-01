@@ -5,13 +5,19 @@ from InputForm import Inputform
 
 
 data_folder = './data'
-scoring_uri = 'http://5298bb33-0d7b-4376-ab1d-c04e79f718df.westus.azurecontainer.io/score'
-key = 'O13psE1xgbdmsZpVjyzE8BZs69dh6uBw'
+
+mode = 'TEST'
+
+if mode == 'PROD':
+    scoring_uri = 'http://52.191.187.136:80/api/v1/service/bf-aks-service/score'
+    key = 'BxM0tMv4d9NATe4Yq4pgc6OgMtsSwqB5'
+else:
+    scoring_uri = 'http://5298bb33-0d7b-4376-ab1d-c04e79f718df.westus.azurecontainer.io/score'
+    key = 'O13psE1xgbdmsZpVjyzE8BZs69dh6uBw'
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'you-will-never-guess'
-
+app.config['SECRET_KEY'] = 'magic'
 
 
 def get_data(form):
@@ -34,7 +40,8 @@ def get_data(form):
 def display():
     form = Inputform(request.form)
     prediction = None
-    test_data=None
+    msg = "Running on test server!" if mode != 'PROD' else None
+
     if form.validate_on_submit():
         test_data = get_data(form)
         test_data_json = bytes(json.dumps(test_data), encoding='utf8')
@@ -43,7 +50,7 @@ def display():
         prediction = resp.text
     return render_template('demoapp.html',
                            form=form,
-                           debug=test_data,
+                           msg=msg,
                            prediction=f"${prediction}" if prediction is not None else "")
 
 
