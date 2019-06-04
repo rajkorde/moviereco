@@ -6,7 +6,7 @@ from InputForm import Inputform
 
 data_folder = './data'
 
-mode = 'TEST'
+mode = 'PROD'
 
 if mode == 'PROD':
     scoring_uri = 'http://52.191.187.136:80/api/v1/service/bf-aks-service/score'
